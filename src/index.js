@@ -1,5 +1,5 @@
 const { GraphQLServer } = require('graphql-yoga')
-
+const { find, findIndex } = require('lodash')
 
 //data is stored in links variable
 let links = [{
@@ -19,6 +19,7 @@ const resolvers = {
         info: () => `This is the API of a Hackernew Clone`,
         //calling feed resolves to links
         feed: () => links,
+        link: (root, args) => find(links, {id: args.id}),
     },
 
     Mutation: {
@@ -29,6 +30,26 @@ const resolvers = {
                 url: args.url
             }
             links.push(link)
+            return link
+        },
+
+        deleteLink: (root, args) => {
+            const linkIndex = findIndex(links, {id: args.id})
+            //console.log(linkIndex)
+            const link = find(links, {id: args.id})
+            //console.log(link.id)
+            if (linkIndex > -1){
+            links.splice(linkIndex, 1)
+            return link
+            } else {return `Id not found in DB`}
+        },
+
+        updateLink: (root, args) => {
+            const link = find(links, {id: args.id})
+            const linkIndex = findIndex(links, {id: args.id})
+            link.description = args.description
+            link.url = args.url
+            links[linkIndex]=link
             return link
         }
     }
