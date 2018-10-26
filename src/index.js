@@ -42,6 +42,7 @@ const resolvers = {
             links.splice(linkIndex, 1)
             return link
             } else {return `Id not found in DB`}
+            //error case does not really work yet
         },
 
         updateLink: (root, args) => {
