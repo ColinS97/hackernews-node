@@ -1,28 +1,13 @@
 const { GraphQLServer } = require('graphql-yoga')
 const { Prisma } = require('prisma-binding')
+const Query = require('./resolvers/Query')
+const Mutation = require('./resolvers/Mutation')
+const AuthPayload = require('./resolvers/AuthPayLoad')
 
 const resolvers = {
-    Query: {
-        // cannot put null here graphql-js implementation prevents this mistake because String! forces some input!=null
-        info: () => `This is the API of a Hackernew Clone`,
-        //calling feed resolves to links
-        feed: (root, args, context, info) => {
-            return context.db.query.links({},info)
-        },
-    },
-
-    Mutation: {
-        post: (root, args, context, info) => {
-            return context.db.mutation.createLink({
-                data: {
-                    url: args.url,
-                    description: args.description,
-                },
-            }, info)
-            
-        },
-
-    }
+    Query,
+    Mutation,
+    AuthPayload
 }
 
 
