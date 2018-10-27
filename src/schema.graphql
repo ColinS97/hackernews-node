@@ -1,4 +1,4 @@
-# import Link from "./generated/prisma.graphql"
+#import Link from "./generated/prisma.graphql"
 
 type Query {
     info: String!
@@ -13,7 +13,7 @@ type Mutation {
 
 type AuthPayload {
     token: String
-    user: user
+    user: User
 }
 
 type User {
